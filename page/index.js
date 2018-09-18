@@ -35,7 +35,7 @@ new Vue({
                     self.init = false;
                     // console.log(xhr.responseText)
                 }
-            }
+            };
             xhr.send(formdata);
         
         },
@@ -71,9 +71,9 @@ new Vue({
                     self.init = false;
                     // console.log(xhr.responseText)
                 }
-            }
+            };
             xhr.send(formdata);
         }
 
     }
-  })
+  });
