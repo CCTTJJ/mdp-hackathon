@@ -5,11 +5,11 @@ const fs = require('fs');
 const https = require('https');
 const http = require('http');
 const AipImageClassifyClient = require("baidu-aip-sdk").imageClassify;
-var multer  = require('multer')
+var multer  = require('multer');
 
 // paser body
-app.use(bodyParser.json())
-app.use(express.static('page'))
+app.use(bodyParser.json());
+app.use(express.static('page'));
 // 这里dest对应的值是你要将上传的文件存的文件夹
 var upload = multer({dest:'page/uploads'});
 //上传保存在内存中
@@ -57,7 +57,7 @@ var imgHttp = function(url,callback){
         　　});     
         });
 
-}
+};
 
 
 // 创建前端访问接口
@@ -69,9 +69,9 @@ app.post("/upload", upload.single('file'),(req, res) => {
     
     // req.file 是 'file' 文件的信息 （前端传递的文件类型在req.file中获取）
     // req.body 将具有文本域数据，如果存在的话  。（上面前端代码中传递的date字段在req.body中获取）
-    console.log(req.body) //{ date: '2018/1/20 下午5:25:56' }
-    console.log(req.file)
-    console.log(req.file)
+    console.log(req.body); //{ date: '2018/1/20 下午5:25:56' }
+    console.log(req.file);
+    console.log(req.file);
 
     /*-------如果设置将上传的图片保存在内存中，则用以下方式-----------*/
 
@@ -93,7 +93,7 @@ app.post("/upload", upload.single('file'),(req, res) => {
         var sendData = {
             animalRes:result,
             imgUrl:'./uploads/' + req.file.filename
-        }
+        };
         console.log(JSON.stringify(sendData));
         res.send(JSON.stringify(sendData))
     }).catch(function(err) {
@@ -127,7 +127,7 @@ app.post("/upload", upload.single('file'),(req, res) => {
     //     })
     //     return;
     // }
-})
+});
 
 /*-----网络图片识别-------*/
 app.get('/getAnimalInfo',function(req,res){
@@ -138,7 +138,7 @@ app.get('/getAnimalInfo',function(req,res){
             var sendData = {
                 animalRes:result,
                 imgUrl:data
-            }
+            };
             console.log(JSON.stringify(sendData));
             res.send(JSON.stringify(sendData))
         }).catch(function(err) {
@@ -152,8 +152,8 @@ app.get('/getAnimalInfo',function(req,res){
 
 var server = app.listen(8080, function () {
  
-    var host = server.address().address
-    var port = server.address().port
-    console.log("应用实例，访问地址为 http://%s:%s", host, port)
+    var host = server.address().address;
+    var port = server.address().port;
+    console.log("应用实例，访问地址为 http://%s:%s", host, port);
    
-  })
+  });
