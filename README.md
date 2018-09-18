@@ -1,5 +1,6 @@
 # mdp-hackathon
 
+<<<<<<< HEAD
 step 1:
         npm install
 
@@ -9,8 +10,9 @@ step 2:
 
 step 3:
         npm run start
-
+=======
 
 - Using command 'npm install' to get the dependencies
 
 - Using command 'npm start' to start
+>>>>>>> 273112c05143ee20accfcda5dedfccd7fa1f1474

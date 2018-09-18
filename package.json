@@ -28,6 +28,7 @@
     "mongoose": "^4.11.4",
     "mongoskin": "^2.1.0",
     "multer": "^1.3.0",
-    "request": "^2.85.0"
+    "request": "^2.85.0",
+    "tencentyoutuyun": "^1.0.0"
   }
 }
