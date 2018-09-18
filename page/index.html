@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="./DEMO.css">
     <script src="./lib/vue.min.js"></script>
     <script src="./lib/mint-ui.js"></script>
+    <script src="./lib/jquery.js"></script>
     <title>AI识图</title>
 </head>
 
@@ -57,22 +58,26 @@
     <!--</div>   -->
     <!--</div>-->
     <section id="slider">
+        <!-- <div id="input"> -->
         <input type="radio" name="slider" id="s1">
-        <input type="radio" name="slider" id="s2">
-        <input type="radio" name="slider" id="s3" checked>
-        <input type="radio" name="slider" id="s4">
-        <input type="radio" name="slider" id="s5">
-        <!--   <input type="r/adio" name="slider" id="s6"> -->
+        <input type="radio" name="slider" id="s2" checked>
+        <input type="radio" name="slider" id="s3">
+        <!-- </div> -->
+        <!-- <input type="radio" name="slider" id="s4"> -->
+        <!-- <input type="radio" name="slider" id="s5" checked> -->
+        <!--   <input type="radio" name="slider" id="s6"> -->
         <!--   <input type="radio" name="slider" id="s7"> -->
         <!--   <input type="radio" name="slider" id="s8"> -->
         <!--   <input type="radio" name="slider" id="s9"> -->
         <!--   <input type="radio" name="slider" id="s10"> -->
         <!--   <input type="radio" name="slider" id="s11"> -->
+        <!-- <div id="label"> -->
         <label for="s1" id="slide1"></label>
         <label for="s2" id="slide2"></label>
         <label for="s3" id="slide3"></label>
-        <label for="s4" id="slide4"></label>
-        <label for="s5" id="slide5"></label>
+        <!-- </div> -->
+        <!-- <label for="s4" id="slide4"></label> -->
+        <!-- <label for="s5" id="slide5"></label> -->
         <!--   <label for="s6" id="slide6"></label> -->
         <!--   <label for="s7" id="slide7"></label> -->
         <!--   <label for="s8" id="slide8"></label> -->
@@ -82,6 +87,7 @@
     </section>
     <script src="./index.js"></script>
     <script>
+        var size = 4;
         document.querySelector("html").classList.add('js');
 
         var fileInput = document.querySelector(".input-file"),
@@ -101,10 +107,8 @@
             // the_return.src = this.value;
             var file = document.getElementById("my-file");
             var imgUrl = window.URL.createObjectURL(file.files[0]);
-            var img = document.getElementById('file-return');
-            img.setAttribute('src', imgUrl); // 修改img标签src属性值
-            img.style.width = '100%';
-            img.style.height = '100%';
+            addPicDOM(imgUrl);
+
             var formdata = new FormData(),
                 xhr = new XMLHttpRequest();
 
@@ -126,6 +130,29 @@
             };
             xhr.send(formdata);
         });
+
+        var addPicDOM = function (imgUrl) {
+            var inputSize = $('section input').size();
+            if (inputSize >= 5) {
+                $('section input').last().css('backgroundImage', 'url(' + imgUrl + ')')
+                    .attr('checked', true);
+
+                return;
+            }
+            var domStr = '<input type="radio" name="slider" id="s' + size + '" checked>';
+            var labelSize = $('section label').size();
+            var labelStr = '<label for="s' + size + '" id="slide' + size + '"></label>';
+            $(":checked").attr('checked', false)
+            $('section input').last().after($(domStr));
+            $('section label').last().after($(labelStr).css({
+                'background-image': 'url(' + imgUrl + ')',
+                'background-repeat': 'no-epeat',
+                'background-attachment': 'fixed',
+                'background-position': 'cover'
+            }));
+
+            size++;
+        }
     </script>
 </body>
 
