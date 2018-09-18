@@ -161,7 +161,7 @@ h6 {
 .js .input-file-trigger:focus {
     background: #34495E;
     color: #39D2B4;
-    border: 1px solid white;
+    /*border: 1px solid white;*/
     transition: border 0.5s ease;
 }
 
