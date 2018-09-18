@@ -105,7 +105,9 @@ var getAnimalInfo =
                 resolve(res);
             })
         })
-        Promise.all([client.advancedGeneral(image), tp]).then(function (resList) {
+        Promise.all([client.advancedGeneral(image, {
+            baike_num: 1
+        }), tp]).then(function (resList) {
             var result = resHandler(resList);
             var sendData = {
                 animalRes: result,
@@ -200,17 +202,18 @@ function resHandler(resList) {
     if (tag.tag_confidence > score) {
         score = tag.tag_confidence
         keyword = tag.tag_name;
+        return {
+            score,
+            keyword
+        }
     }
-    return {
-        score,
-        keyword
-    };
+    return result;
 }
 
 var server = app.listen(8088, function () {
- 
+
     var host = server.address().address;
     var port = server.address().port;
     console.log("应用实例，访问地址为 http://%s:%s", host, port);
-   
-  });
+
+});
