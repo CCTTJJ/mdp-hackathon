@@ -4,7 +4,7 @@ new Vue({
         key:"ssd",
         imgSrc:"",
         isShow:false,
-        result:[],
+        result:"",
         loading:false,
         init:true,
         upload_file: null
@@ -29,7 +29,7 @@ new Vue({
                     var res = JSON.parse(xhr.responseText)
                     console.log(res)
                     self.imgSrc = res.imgUrl;
-                    self.result = res.animalRes.result;
+                    self.result = res.animalRes.keyword;
                     self.isShow = true;
                     self.loading = false;
                     self.init = false;
