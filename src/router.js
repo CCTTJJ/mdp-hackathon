@@ -108,6 +108,7 @@ var getAnimalInfo =
         Promise.all([client.advancedGeneral(image, {
             baike_num: 1
         }), tp]).then(function (resList) {
+            console.log("--------" + resList);
             var result = resHandler(resList);
             var sendData = {
                 animalRes: result,

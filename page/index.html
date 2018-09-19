@@ -138,14 +138,24 @@
             // the_return.src = this.value;
             var file = document.getElementById("my-file");
             var imgUrl = window.URL.createObjectURL(file.files[0]);
-            addPicDOM(imgUrl);
+            addPicDOM(imgUrl, file);
+        });
 
+        slider.addEventListener('click', function (e) {
             var formdata = new FormData(),
                 xhr = new XMLHttpRequest();
 
             formdata.append('date', new Date().toLocaleString());
             // 将文件添加到formdata对象中，（注：下面的file字段名在node中有用）
-            formdata.append('file', file.files[0]);
+            var targetDOM = e.target;
+            if (targetDOM.tagName !== "LABEL" ||
+                !document.querySelector('#' + targetDOM.getAttribute('for')).hasAttribute('checked')) {
+                return;
+            }
+            if (!targetDOM.imgsrc) {
+                return;
+            }
+            formdata.append('file', targetDOM.imgsrc);
             xhr.open("POST", "/upload", true);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
@@ -169,7 +179,7 @@
         });
 
         // TODO The logic here still not working!
-        var addPicDOM = function (imgUrl) {
+        var addPicDOM = function (imgUrl, file) {
             // var inputSize = $('section input').size();
             // if (inputSize >= 5) {
             //     $('section input').last().css('backgroundImage', 'url(' + imgUrl + ')')
@@ -202,6 +212,8 @@
             var targetLabel = document.querySelector('#slide' + index);
             targetInput.checked = true;
             targetLabel.style.backgroundImage = 'url(' + imgUrl + ')';
+            // targetLabel.src = file;
+            targetLabel.imgsrc = file.files[0];
             targetLabel.style.backgtoundSize = '400% 400%';
         }
     </script>
