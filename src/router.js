@@ -191,7 +191,7 @@ function resHandler(resList) {
     var result = bRes.result[0];
     var score = result.score;
     var keyword = result.keyword;
-    score *= 100;
+    score *= 100 * 0.8;
     if (!tRes) {
         return result;
     }
@@ -199,7 +199,8 @@ function resHandler(resList) {
         return b.tag_confidence - a.tag_confidence
     });
     var tag = tags[0];
-    if (tag.tag_confidence > score) {
+    var tag_confidence = tag.tag_confidence * 0.2;
+    if (tag_confidence > score) {
         score = tag.tag_confidence
         keyword = tag.tag_name;
         return {
