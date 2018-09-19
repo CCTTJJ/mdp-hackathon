@@ -311,9 +311,20 @@ body {
     font-weight: bold;
     align-content: center;
 }
+
 p {
     text-align: center;
 }
-.s1, .s2, .s3, .s4, .s5 {
+
+.s1,
+.s2,
+.s3,
+.s4,
+.s5 {
     display: none;
+}
+
+.description {
+    text-align: center;
+    padding-top: 5px;
 }

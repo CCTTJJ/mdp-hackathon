@@ -161,7 +161,7 @@
                     preTp.style.display = 'none';
 
                     var tp = document.querySelector('.s' + index);
-                    tp.innerHTML = '<p>' + result + '</p>';
+                    tp.innerHTML = '<h2>' + result + '</h2>';
                     tp.style.display = 'block';
                 }
             };
@@ -202,6 +202,7 @@
             var targetLabel = document.querySelector('#slide' + index);
             targetInput.checked = true;
             targetLabel.style.backgroundImage = 'url(' + imgUrl + ')';
+            targetLabel.style.backgtoundSize = '400% 400%';
         }
     </script>
 </body>
