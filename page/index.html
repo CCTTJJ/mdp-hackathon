@@ -63,8 +63,8 @@
         <input type="radio" name="slider" id="s2" checked>
         <input type="radio" name="slider" id="s3">
         <!-- </div> -->
-        <!-- <input type="radio" name="slider" id="s4"> -->
-        <!-- <input type="radio" name="slider" id="s5" checked> -->
+        <input type="radio" name="slider" id="s4">
+        <input type="radio" name="slider" id="s5">
         <!--   <input type="radio" name="slider" id="s6"> -->
         <!--   <input type="radio" name="slider" id="s7"> -->
         <!--   <input type="radio" name="slider" id="s8"> -->
@@ -76,8 +76,8 @@
         <label for="s2" id="slide2"></label>
         <label for="s3" id="slide3"></label>
         <!-- </div> -->
-        <!-- <label for="s4" id="slide4"></label> -->
-        <!-- <label for="s5" id="slide5"></label> -->
+        <label for="s4" id="slide4"></label>
+        <label for="s5" id="slide5"></label>
         <!--   <label for="s6" id="slide6"></label> -->
         <!--   <label for="s7" id="slide7"></label> -->
         <!--   <label for="s8" id="slide8"></label> -->
@@ -85,14 +85,24 @@
         <!--   <label for="s10" id="slide10"></label> -->
         <!--   <label for="s11" id="slide11"></label> -->
     </section>
+    <div class="description s1">
+        <p>this is a test.</p>
+    </div>
+    <div class="description s2"></div>
+    <div class="description s3"></div>
+    <div class="description s4"></div>
+    <div class="description s5"></div>
+
     <script src="./index.js"></script>
     <script>
-        var size = 4;
+        var size = 4,
+            index = 1;
         document.querySelector("html").classList.add('js');
 
         var fileInput = document.querySelector(".input-file"),
             button = document.querySelector(".input-file-trigger"),
-            the_return = document.querySelector(".file-return");
+            the_return = document.querySelector(".file-return"),
+            slider = document.querySelector('section');
 
         button.addEventListener("keydown", function (event) {
             if (event.keyCode == 13 || event.keyCode == 32) {
@@ -103,6 +113,27 @@
             fileInput.focus();
             return false;
         });
+
+        slider.addEventListener('input', function (e) {
+            console.log(e);
+            var t = e.target;
+            var tid = t.id;
+            if (tid) {
+                var tlist = tid.split('');
+                var num = +tlist[tlist.length - 1];
+                console.log(num);
+                document.querySelector('.' + tid).style.display = 'block';
+                document.querySelector('.s' + ((num + 1) > 5 ? 1 : (num + 1))).style.display = 'none';
+                document.querySelector('.s' + ((num - 1) < 1 ? 5 : (num - 1))).style.display = 'none';
+
+            }
+            // t.style.display = 'block';
+        }, false);
+
+        slider.addEventListener('onblur', function (e) {
+            console.log('blur ' + e);
+        }, true);
+
         fileInput.addEventListener("change", function (event) {
             // the_return.src = this.value;
             var file = document.getElementById("my-file");
@@ -114,44 +145,63 @@
 
             formdata.append('date', new Date().toLocaleString());
             // 将文件添加到formdata对象中，（注：下面的file字段名在node中有用）
-            formdata.append('file', file);
+            formdata.append('file', file.files[0]);
             xhr.open("POST", "/upload", true);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     var res = JSON.parse(xhr.responseText);
                     console.log(res);
                     // self.imgSrc = res.imgUrl;
-                    self.result = res.animalRes.keyword;
-                    self.isShow = true;
-                    self.loading = false;
+                    var result = res.animalRes.keyword;
+                    // self.isShow = true;
+                    // self.loading = false;
                     // self.init = false;
                     // console.log(xhr.responseText)
+                    var preTp = document.querySelector('.s' + (index - 1 <= 0 ? 5 : index - 1));
+                    preTp.style.display = 'none';
+
+                    var tp = document.querySelector('.s' + index);
+                    tp.innerHTML = '<p>' + result + '</p>';
+                    tp.style.display = 'block';
                 }
             };
             xhr.send(formdata);
         });
 
+        // TODO The logic here still not working!
         var addPicDOM = function (imgUrl) {
-            var inputSize = $('section input').size();
-            if (inputSize >= 5) {
-                $('section input').last().css('backgroundImage', 'url(' + imgUrl + ')')
-                    .attr('checked', true);
+            // var inputSize = $('section input').size();
+            // if (inputSize >= 5) {
+            //     $('section input').last().css('backgroundImage', 'url(' + imgUrl + ')')
+            //         .attr('checked', true);
+            //
+            //     return;
+            // }
+            // var domStr = '<input type="radio" name="slider" id="s' + size + '" checked>';
+            // var labelSize = $('section label').size();
+            // var labelStr = '<label for="s' + size + '" id="slide' + size + '"></label>';
+            // $(":checked").attr('checked', false)
+            // $('section input').last().after($(domStr));
+            // $('section label').last().after($(labelStr).css({
+            //     'background-image': 'url(' + imgUrl + ')',
+            //     'background-repeat': 'no-epeat',
+            //     'background-attachment': 'fixed',
+            //     'background-position': 'center',
+            //     'background-size': '100%'
+            // }));
+            //
+            // size++;
 
-                return;
+            var preInput = document.querySelector('input:checked');
+            preInput.checked = false;
+            index++;
+            if (index > 5) {
+                index = index % 5;
             }
-            var domStr = '<input type="radio" name="slider" id="s' + size + '" checked>';
-            var labelSize = $('section label').size();
-            var labelStr = '<label for="s' + size + '" id="slide' + size + '"></label>';
-            $(":checked").attr('checked', false)
-            $('section input').last().after($(domStr));
-            $('section label').last().after($(labelStr).css({
-                'background-image': 'url(' + imgUrl + ')',
-                'background-repeat': 'no-epeat',
-                'background-attachment': 'fixed',
-                'background-position': 'cover'
-            }));
-
-            size++;
+            var targetInput = document.querySelector('#s' + index);
+            var targetLabel = document.querySelector('#slide' + index);
+            targetInput.checked = true;
+            targetLabel.style.backgroundImage = 'url(' + imgUrl + ')';
         }
     </script>
 </body>
